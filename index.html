@@ -24,16 +24,20 @@
             border: none;
         }
     </style>
-    <script>
-        // Refresh the page every 5 minutes (300000 milliseconds)
-        setTimeout(() => {
-            location.reload();
-        }, 60000);
+     <script>
+        function reloadSlides() {
+            const iframe = document.getElementById("slidesFrame");
+            iframe.src = iframe.src; // Reloads the iframe content
+        }
+
+        // Reload the Google Slides iframe every 1 minute (60,000 milliseconds)
+        setInterval(reloadSlides, 60000);
     </script>
 </head>
 <body>
-    <div class="slide-container">
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vROl4nGDRNf4T2PGay__2U1dn9dRPHMfWKBsjkmR50exjBY20yal-LYTBAH6mwEkg71cCEaATqM67fH/embed?start=true&loop=true&delayms=3000&rm=minimal#slide=id.p"
+       <div class="slide-container">
+        <iframe id="slidesFrame" 
+            src="https://docs.google.com/presentation/d/e/2PACX-1vXXXXXXXXXXXXXX/embed?start=true&loop=true&delayms=3000&rm=minimal#slide=id.p"
             allowfullscreen>
         </iframe>
     </div>
