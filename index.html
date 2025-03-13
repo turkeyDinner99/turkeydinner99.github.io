@@ -27,23 +27,11 @@
 </head>
 <body>
     <div class="slide-container">
-        <iframe id="sandboxFrame" allow="fullscreen"></iframe>
+        <iframe id="slidesFrame" allow="fullscreen"></iframe>
     </div>
 
     <script>
         const googleSlidesURL = "https://docs.google.com/presentation/d/e/2PACX-1vR4Ub-4qHgB90QB2sw1u25DKwFQRfuWnXsocQZSnH2EkCbNWU3bTTQmrGdqpt7KL3r_cCIBT8ClNbD9/pub?start=true&loop=true&delayms=3000&rm=minimal#slide=id.p";
 
-        function loadSlides() {
-            const sandboxFrame = document.getElementById('sandboxFrame');
-            const uniqueURL = `${googleSlidesURL}&timestamp=${new Date().getTime()}`; // Force refresh with timestamp
-            sandboxFrame.src = `data:text/html,<iframe src='${uniqueURL}' allowfullscreen style='width:100vw;height:100vh;border:none;'></iframe>`;
-        }
-
-        // Load slides immediately
-        loadSlides();
-
-        // Refresh every 1 minute (60,000 ms)
-        setInterval(loadSlides, 60000);
-    </script>
-</body>
-</html>
+        function reloadSlides() {
+            const frame = document.getElementBy
