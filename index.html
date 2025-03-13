@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fullscreen Google Slides</title>
+    <title>Google Slides Auto Reload</title>
     <style>
         * {
             margin: 0;
@@ -26,32 +26,24 @@
     </style>
 </head>
 <body>
-    <div class="slide-container" id="slideContainer"></div>
+    <div class="slide-container">
+        <iframe id="sandboxFrame" allow="fullscreen"></iframe>
+    </div>
 
     <script>
-        const slidesURL = "https://docs.google.com/presentation/d/e/2PACX-1vR4Ub-4qHgB90QB2sw1u25DKwFQRfuWnXsocQZSnH2EkCbNWU3bTTQmrGdqpt7KL3r_cCIBT8ClNbD9/pub?start=true&loop=true&delayms=3000&rm=minimal#slide=id.p";
+        const googleSlidesURL = "https://docs.google.com/presentation/d/e/2PACX-1vR4Ub-4qHgB90QB2sw1u25DKwFQRfuWnXsocQZSnH2EkCbNWU3bTTQmrGdqpt7KL3r_cCIBT8ClNbD9/pub?start=true&loop=true&delayms=3000&rm=minimal#slide=id.p";
 
-        function createIframe() {
-            const iframe = document.createElement('iframe');
-            iframe.src = slidesURL;
-            iframe.allowFullscreen = true;
-            iframe.style.width = '100vw';
-            iframe.style.height = '100vh';
-            iframe.style.border = 'none';
-            return iframe;
+        function loadSlides() {
+            const sandboxFrame = document.getElementById('sandboxFrame');
+            const uniqueURL = `${googleSlidesURL}&timestamp=${new Date().getTime()}`; // Force refresh with timestamp
+            sandboxFrame.src = `data:text/html,<iframe src='${uniqueURL}' allowfullscreen style='width:100vw;height:100vh;border:none;'></iframe>`;
         }
 
-        function reloadSlides() {
-            const container = document.getElementById('slideContainer');
-            container.innerHTML = ''; // Remove old iframe
-            container.appendChild(createIframe()); // Add new iframe
-        }
+        // Load slides immediately
+        loadSlides();
 
-        // Load the slides immediately
-        reloadSlides();
-
-        // Reload slides every 1 minute (60,000 ms)
-        setInterval(reloadSlides, 60000);
+        // Refresh every 1 minute (60,000 ms)
+        setInterval(loadSlides, 60000);
     </script>
 </body>
 </html>
