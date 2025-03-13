@@ -6,21 +6,31 @@
     <title>Google Slides Auto Reload</title>
 </head>
 <body>
-    <iframe id="slidesFrame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+    <iframe id="sandboxFrame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
 
     <script>
         const googleSlidesURL = "https://docs.google.com/presentation/d/e/2PACX-1vR4Ub-4qHgB90QB2sw1u25DKwFQRfuWnXsocQZSnH2EkCbNWU3bTTQmrGdqpt7KL3r_cCIBT8ClNbD9/pub?start=true&loop=true&delayms=3000&rm=minimal#slide=id.p";
 
         function reloadSlides() {
-            const frame = document.getElementById('slidesFrame');
-            const uniqueURL = googleSlidesURL + '&nocache=' + new Date().getTime(); // Add unique token to bypass cache
-            frame.src = uniqueURL;
+            const frame = document.getElementById('sandboxFrame');
+            const uniqueURL = `${googleSlidesURL}&t=${Date.now()}`;
+            const sandboxHTML = `
+                <iframe 
+                    src="${uniqueURL}" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    allowfullscreen>
+                </iframe>
+            `;
+            const blob = new Blob([sandboxHTML], { type: 'text/html' });
+            frame.src = URL.createObjectURL(blob);
         }
 
         // Load slides immediately
         reloadSlides();
 
-        // Refresh every 1 minute (60,000 ms)
+        // Refresh every 1 minute (60000 ms)
         setInterval(reloadSlides, 60000);
     </script>
 </body>
